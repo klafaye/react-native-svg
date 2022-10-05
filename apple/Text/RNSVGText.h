@@ -26,5 +26,6 @@
 - (CTFontRef)getFontFromContext;
 - (CGFloat)getSubtreeTextChunksTotalAdvance;
 - (RNSVGText*)getTextAnchorRoot;
+- (RNSVGLength *)testInlineSize;
 
 @end

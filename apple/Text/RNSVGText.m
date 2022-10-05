@@ -175,6 +175,28 @@
     [self popGlyphContext];
 }
 
+- (RNSVGLength *)testInlineSize
+{
+    if (_inlineSize != nil) {
+        return _inlineSize;
+    }
+
+    RNSVGPlatformView* parent = self.superview;
+    while (parent != nil) {
+        if ([parent isKindOfClass:[RNSVGText class]]) {
+            RNSVGText* node = (RNSVGText*)parent;
+            RNSVGLength* inlineSize = node.inlineSize;
+            if (inlineSize != nil) {
+                _inlineSize = inlineSize;
+                return inlineSize;
+            }
+        }
+        parent = [parent superview];
+    }
+
+    return nil;
+}
+
 // TODO: Optimisation required
 - (RNSVGText *)textRoot
 {

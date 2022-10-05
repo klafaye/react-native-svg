@@ -64,7 +64,7 @@ static CGFloat RNSVGTSpan_radToDeg = 180 / (CGFloat)M_PI;
 {
     if (self.content) {
         RNSVGGlyphContext* gc = [self.textRoot getGlyphContext];
-        if (self.inlineSize != nil && self.inlineSize.value != 0) {
+        if ([self testInlineSize] != nil && [self testInlineSize].value != 0) {
             if (self.fill) {
                 if (self.fill.class == RNSVGBrush.class) {
                     CGColorRef color = [self.tintColor CGColor];
@@ -187,7 +187,7 @@ RNSVGTopAlignedLabel *label;
 
     CGFloat fontSize = [gc getFontSize];
     CGFloat height = CGRectGetHeight(rect);
-    CGFloat width = [RNSVGPropHelper fromRelative:self.inlineSize
+    CGFloat width = [RNSVGPropHelper fromRelative:[self testInlineSize]
                                          relative:[gc getWidth]
                                          fontSize:fontSize];
     CGRect constrain = CGRectMake(0, 0, width, height);
@@ -224,7 +224,7 @@ RNSVGTopAlignedLabel *label;
         return [self getGroupPath:context];
     }
 
-    if (self.inlineSize != nil && self.inlineSize.value != 0) {
+    if ([self testInlineSize] != nil && [self testInlineSize].value != 0) {
         CGAffineTransform transform = CGAffineTransformMakeTranslation(firstX, firstY);
         path = CGPathCreateWithRect(label.bounds, &transform);
         self.path = CGPathRetain(path);

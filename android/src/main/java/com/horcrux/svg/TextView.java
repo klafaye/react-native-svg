@@ -262,4 +262,25 @@ class TextView extends GroupView {
         }
         return node;
     }
+
+	SVGLength getTestInlineSize() {
+
+		if (mInlineSize != null) {
+			return mInlineSize;
+		}
+
+		TextView node = this;
+		ViewParent parent = this.getParent();
+		while (parent instanceof TextView) {
+			node = (TextView) parent;
+			parent = node.getParent();
+			SVGLength inlineSize = node.mInlineSize;
+			if (inlineSize != null) {
+				mInlineSize = inlineSize;
+				return mInlineSize;
+			}
+		}
+
+		return null;
+	}
 }

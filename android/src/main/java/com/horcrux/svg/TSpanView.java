@@ -92,7 +92,7 @@ class TSpanView extends TextView {
     @Override
     void draw(Canvas canvas, Paint paint, float opacity) {
         if (mContent != null) {
-            if (mInlineSize != null && mInlineSize.value != 0) {
+            if (this.getTestInlineSize() != null && this.getTestInlineSize().value != 0) {
                 if (setupFillPaint(paint, opacity * fillOpacity)) {
                     drawWrappedText(canvas, paint);
                 }
@@ -149,7 +149,7 @@ class TSpanView extends TextView {
 
         boolean includeFontPadding = true;
         SpannableString text = new SpannableString(mContent);
-        final double width = PropHelper.fromRelative(mInlineSize, canvas.getWidth(), 0, mScale, fontSize);
+        final double width = PropHelper.fromRelative(this.getTestInlineSize(), canvas.getWidth(), 0, mScale, fontSize);
         StaticLayout layout = getStaticLayout(tp, align, includeFontPadding, text, (int) width);
 
         int lineAscent = layout.getLineAscent(0);
