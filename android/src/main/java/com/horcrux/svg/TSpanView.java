@@ -155,7 +155,7 @@ class TSpanView extends TextView {
         int lineAscent = layout.getLineAscent(0);
 
         float dx = (float) gc.nextX(0);
-        float dy = (float) (gc.nextY() + lineAscent);
+        float dy = (float) (gc.nextY() - (lineAscent / 2) - (layout.getHeight() / 2));
         popGlyphContext();
 
         canvas.save();
@@ -178,7 +178,7 @@ class TSpanView extends TextView {
         } else {
             return StaticLayout.Builder.obtain(text, 0, text.length(), tp, width)
                     .setAlignment(align)
-                    .setLineSpacing(0.f, 1.f)
+                    .setLineSpacing(0.f, 0.8f)
                     .setIncludePad(includeFontPadding)
                     .setBreakStrategy(Layout.BREAK_STRATEGY_HIGH_QUALITY)
                     .setHyphenationFrequency(Layout.HYPHENATION_FREQUENCY_NORMAL)
