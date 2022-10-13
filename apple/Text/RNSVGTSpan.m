@@ -10,7 +10,7 @@
 #import "RNSVGText.h"
 #import "RNSVGTextPath.h"
 #import "RNSVGTextProperties.h"
-#import "RNSVGTopAlignedLabel.h"
+//#import "RNSVGTopAlignedLabel.h"
 #import "RNSVGPathMeasure.h"
 #import "RNSVGFontData.h"
 
@@ -137,7 +137,7 @@ static CGFloat RNSVGTSpan_radToDeg = 180 / (CGFloat)M_PI;
     return attrs;
 }
 
-RNSVGTopAlignedLabel *label;
+UILabel *label;
 - (void)drawWrappedText:(CGContextRef)context gc:(RNSVGGlyphContext *)gc rect:(CGRect)rect color:(CGColorRef)color {
     [self pushGlyphContext];
     if (fontRef != nil) {
@@ -172,9 +172,17 @@ RNSVGTopAlignedLabel *label;
 
     UIFont *font = (__bridge UIFont *)(fontRef);
     if (!label) {
-        label = [[RNSVGTopAlignedLabel alloc] init];
+        label = [[UILabel alloc] init];
     }
-    label.attributedText = (__bridge NSAttributedString * _Nullable)(attrString);
+    NSAttributedString *spanAttributedString = (__bridge NSAttributedString * _Nullable)(attrString);
+    NSMutableAttributedString *spanMutableAttributedString = [[NSMutableAttributedString alloc] initWithAttributedString:spanAttributedString];
+
+    // lineSpacing
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.maximumLineHeight = font.lineHeight - 30;
+    [spanMutableAttributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, spanMutableAttributedString.length)];
+    label.attributedText = spanMutableAttributedString;
+
     label.lineBreakMode = NSLineBreakByWordWrapping;
     label.backgroundColor = RNSVGColor.clearColor;
     label.textAlignment = align;
@@ -186,18 +194,11 @@ RNSVGTopAlignedLabel *label;
     label.textColor = [RNSVGColor colorWithCGColor:color];
 
     CGFloat fontSize = [gc getFontSize];
-    CGFloat height = CGRectGetHeight(rect);
     CGFloat width = [RNSVGPropHelper fromRelative:[self testInlineSize]
                                          relative:[gc getWidth]
                                          fontSize:fontSize];
-    CGRect constrain = CGRectMake(0, 0, width, height);
-    CGRect s = [self.content
-                boundingRectWithSize:constrain.size
-                options:NSStringDrawingUsesLineFragmentOrigin
-                attributes:attrs
-                context:nil];
 
-    CGRect bounds = CGRectMake(0, 0, width, s.size.height);
+    CGRect bounds = CGRectMake(0, 0, width, rect.size.height);
     label.frame = bounds;
     label.bounds = bounds;
 
