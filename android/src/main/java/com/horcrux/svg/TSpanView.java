@@ -178,7 +178,7 @@ class TSpanView extends TextView {
         } else {
             return StaticLayout.Builder.obtain(text, 0, text.length(), tp, width)
                     .setAlignment(align)
-                    .setLineSpacing(0.f, 0.8f)
+                    .setLineSpacing(0.f, 0.9f)
                     .setIncludePad(includeFontPadding)
                     .setBreakStrategy(Layout.BREAK_STRATEGY_HIGH_QUALITY)
                     .setHyphenationFrequency(Layout.HYPHENATION_FREQUENCY_NORMAL)

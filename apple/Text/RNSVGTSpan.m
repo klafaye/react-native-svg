@@ -179,7 +179,7 @@ UILabel *label;
 
     // lineSpacing
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    paragraphStyle.maximumLineHeight = font.lineHeight - 30;
+    paragraphStyle.maximumLineHeight = font.lineHeight - 10;
     [spanMutableAttributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, spanMutableAttributedString.length)];
     label.attributedText = spanMutableAttributedString;
 
